@@ -32,6 +32,9 @@ class AdvertisementsController extends AControllerBase
         $adToDelete = Advertisement::getOne($id);
 
         if ($adToDelete) {
+            if ($adToDelete->getImg()) {
+                unlink($adToDelete->getImg());
+            }
             $adToDelete->delete();
         }
 
@@ -42,9 +45,21 @@ class AdvertisementsController extends AControllerBase
     {
         $id = $this->request()->getValue('id');
         $ad = ($id ? Advertisement::getOne($id) : new Advertisement());
-        $ad->setTitle($this->request()->getValue('title'));
-        $ad->setPrice($this->request()->getValue('price'));
-        $ad->setText($this->request()->getValue('text'));
+        $ad->setTitle($this->request()->getValue('title') ? $this->request()->getValue('title') : "-");
+        $ad->setPrice($this->request()->getValue('price') ? $this->request()->getValue('price') : 0);
+        $ad->setText($this->request()->getValue('text') ? $this->request()->getValue('text') : "-");
+
+        if ($this->request()->getFiles()['img'] && $this->request()->getFiles()['img']['error'] == UPLOAD_ERR_OK) {
+            $filename = "public" . DIRECTORY_SEPARATOR
+                . "images" . DIRECTORY_SEPARATOR
+                . "advertisements" . DIRECTORY_SEPARATOR
+                . time() . "_" . $this->request()->getFiles()['img']['name'];
+
+            if (move_uploaded_file($this->request()->getFiles()['img']['tmp_name'], $filename)) {
+                $ad->setImg($filename);
+            }
+        }
+
         $ad->save();
         return $this->redirect("?c=advertisements");
     }
