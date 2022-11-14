@@ -11,6 +11,7 @@ class Advertisement extends Model
     protected $Price;
     protected $Text;
     protected $img;
+    protected $users_id;
 
     /**
      * @return mixed
@@ -92,4 +93,20 @@ class Advertisement extends Model
         $this->img = $img;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getUsersid()
+    {
+        return $this->users_id;
+    }
+
+    /**
+     * @param mixed $users_id
+     */
+    public function setUsersid($users_id): void
+    {
+        $this->users_id = $users_id;
+    }
 }

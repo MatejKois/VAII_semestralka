@@ -5,7 +5,10 @@
         if ($data->getId()) { ?>
             <input type="hidden" name="id" value="<?php echo $data->getId() ?>">
         <?php }
-    } ?>
+        if ($data->getUsersid()) { ?>
+            <input type="hidden" name="user_id" value="<?php echo $data->getUsersid() ?>">
+        <?php } ?>
+    <?php } ?>
     <div class="mb-3">
         <label class="form-label">Titulok</label>
         <input type="text" name="title" class="form-control" placeholder="Titulok" value="<?php echo $data ? $data->getTitle() : null ?>">

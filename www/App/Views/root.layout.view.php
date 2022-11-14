@@ -27,11 +27,13 @@
         </a>
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
-                <a class="nav-link" href="?c=home&a=contact">Kontakt</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="?c=advertisements">Všetky inzeráty</a>
             </li>
+            <?php if ($auth->isLogged()) { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="?c=advertisements&a=displayMine">Moje inzeráty</a>
+                </li>
+            <?php } ?>
         </ul>
         <?php if ($auth->isLogged()) { ?>
             <span class="navbar-text">Prihlásený používateľ: <b><?= $auth->getLoggedUserName() ?></b></span>
@@ -42,6 +44,9 @@
             </ul>
         <?php } else { ?>
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="?c=users&a=signup">Zaregistrovať</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= \App\Config\Configuration::LOGIN_URL ?>">Prihlásenie</a>
                 </li>

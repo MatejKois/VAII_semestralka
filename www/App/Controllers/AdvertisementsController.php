@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Core\AControllerBase;
+use App\Core\IAuthenticator;
 use App\Core\Responses\Response;
 use App\Models\Advertisement;
+use App\Models\User;
 
 class AdvertisementsController extends AControllerBase
 {
@@ -13,9 +15,16 @@ class AdvertisementsController extends AControllerBase
         switch ($action) {
             case "create":
             case "store":
+                return $this->app->getAuth()->isLogged();
             case "edit":
             case "delete":
-            return $this->app->getAuth()->isLogged();
+            $userId = Advertisement::getOne($this->request()->getValue('id'))->getUsersid();
+            if ($userId) {
+                if ($this->app->getAuth()->isLogged() && User::getOne($userId)->getLogin() == $this->app->getAuth()->getLoggedUserName()) {
+                    return true;
+                }
+            }
+            return false;
         }
         return true;
     }
@@ -44,7 +53,20 @@ class AdvertisementsController extends AControllerBase
     public function store()
     {
         $id = $this->request()->getValue('id');
-        $ad = ($id ? Advertisement::getOne($id) : new Advertisement());
+        if (!$id) {
+            $ad = new Advertisement();
+            $uID = "";
+            foreach (User::getAll() as $user) {
+                /** @var IAuthenticator $auth */
+                if ($user->getLogin() == $this->app->getAuth()->getLoggedUserName()) {
+                    $uID = $user->getId();
+                    break;
+                }
+            }
+            $ad->setUsersid($uID);
+        } else {
+            $ad = Advertisement::getOne($id);
+        }
         $ad->setTitle($this->request()->getValue('title') ? $this->request()->getValue('title') : "-");
         $ad->setPrice($this->request()->getValue('price') ? $this->request()->getValue('price') : 0);
         $ad->setText($this->request()->getValue('text') ? $this->request()->getValue('text') : "-");
@@ -74,5 +96,11 @@ class AdvertisementsController extends AControllerBase
         $id = $this->request()->getValue('id');
         $adToEdit = Advertisement::getOne($id);
         return $this->html($adToEdit,  viewName: 'create.form');
+    }
+
+    public function displayMine()
+    {
+        $advertisements = Advertisement::getAll();
+        return $this->html($advertisements, viewName: 'display.mine');
     }
 }
