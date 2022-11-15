@@ -12,7 +12,7 @@ while ($j < count($data)) { ?>
     <?php
     for ($i = $j; $i < $j + $step && $i < count($data); $i++) {
         $ad = $data[$i]; ?>
-        <div class="card m-2" style="width: 20rem;">
+        <div class="card m-2">
             <?php if ($ad->getImg()) { ?>
                 <img src="<?php echo $ad->getImg() ?>" class="card-img-top">
             <?php } ?>
@@ -20,7 +20,7 @@ while ($j < count($data)) { ?>
                 <h5 class="card-title">
                     <?php echo $ad->getTitle() ?>
                 </h5>
-                <h5 class="card-title">
+                <h5 class="ad-price">
                     <?php echo $ad->getPrice() ?> &euro;
                 </h5>
                 <p class="card-text">

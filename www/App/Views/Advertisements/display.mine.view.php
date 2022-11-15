@@ -20,7 +20,7 @@
 <?php
 foreach ($data as $ad) {
     if ($auth->isLogged() && \App\Models\User::getOne($ad->getUsersid())->getLogin() == $auth->getLoggedUserName()) { ?>
-    <div class="card mb-4" style="width: 20rem;">
+    <div class="card mb-4" style="width: 60%">
         <?php if ($ad->getImg()) { ?>
             <img src="<?php echo $ad->getImg() ?>" class="card-img-top">
         <?php } ?>
