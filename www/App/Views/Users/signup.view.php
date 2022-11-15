@@ -1,3 +1,7 @@
+<div class="text-center text-danger mb-3">
+    <?= /** @var array $data */
+    @$data['message'] ?>
+</div>
 <form method="post" action="?c=users&a=store">
     <div class="mb-3">
         <label class="form-label">Login</label>

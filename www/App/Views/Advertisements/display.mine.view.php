@@ -4,6 +4,8 @@
 /** @var \App\Core\IAuthenticator $auth */
 ?>
 
+<h2>Moje inzeráty</h2>
+
 <div>
     <?php
     if ($auth->isLogged()) { ?>
