@@ -22,7 +22,7 @@ class UsersController extends AControllerBase
     public function store()
     {
         $login = $this->request()->getValue('login');
-        $password = $this->request()->getValue('password');
+        $password = md5($this->request()->getValue('password'));
 
         foreach (User::getAll() as $user) {
             if ($user->getLogin() == $login) {
