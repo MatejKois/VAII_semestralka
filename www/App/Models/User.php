@@ -10,6 +10,17 @@ class User extends Model
     protected $login;
     protected $password;
 
+    static public function getIdByLogin($pLogin) : int
+    {
+        $users = self::getAll();
+        foreach ($users as $user) {
+            if ($user->getLogin() == $pLogin) {
+                return $user->id;
+            }
+        }
+        return -1;
+    }
+
     /**
      * @return mixed
      */
