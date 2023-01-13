@@ -6,20 +6,54 @@ use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Message;
 
+class ChatArguments {
+    private $uidTo;
+    private $filteredMessages;
+
+    /**
+     * @return mixed
+     */
+    public function getUidTo()
+    {
+        return $this->uidTo;
+    }
+
+    /**
+     * @param mixed $uidTo
+     */
+    public function setUidTo($uidTo): void
+    {
+        $this->uidTo = $uidTo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilteredMessages()
+    {
+        return $this->filteredMessages;
+    }
+
+    /**
+     * @param mixed $filteredMessages
+     */
+    public function setFilteredMessages($filteredMessages): void
+    {
+        $this->filteredMessages = $filteredMessages;
+    }
+}
+
 class MessagesController extends AControllerBase
 {
     public function authorize(string $action)
     {
-        switch ($action) {
-            case "store":
-                return true;
-        }
-        return false;
+        // !!
+        return true;
     }
 
     public function index(): Response
     {
-        return $this->html(viewName: 'index');
+        return $this->html();
     }
 
     public function store()
@@ -30,7 +64,7 @@ class MessagesController extends AControllerBase
         $text = $this->request()->getValue('text');
         $date = date('Y-m-d H:i:s');
 
-        if (!$userIdFrom || $userIdTo) {
+        if (!$userIdFrom || !$userIdTo) {
             return $this->redirect("?c=advertisements");
         }
 
@@ -59,6 +93,11 @@ class MessagesController extends AControllerBase
                 ++$pos;
             }
         }
-        return $this->html($filteredMessages, viewName: 'chat');
+
+        $args = new ChatArguments();
+        $args->setUidTo($uidTo);
+        $args->setFilteredMessages($filteredMessages);
+
+        return $this->html($args, viewName: 'chat');
     }
 }

@@ -1,1 +1,1 @@
-<p>Here will be messages</p>
+<p>The messages will be here</p>
