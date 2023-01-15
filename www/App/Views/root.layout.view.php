@@ -38,6 +38,9 @@
             <span class="navbar-text">Prihlásený používateľ: <b><?= $auth->getLoggedUserName() ?></b></span>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="?c=conversations">Správy</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="?c=auth&a=logout">Odhlásenie</a>
                 </li>
             </ul>

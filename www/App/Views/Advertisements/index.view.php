@@ -41,7 +41,7 @@ while ($j < count($data)) { ?>
                     <?php } ?>
                     <?php if ($auth->isLogged() && \App\Models\User::getOne($ad->getUsersid())->getLogin() != $auth->getLoggedUserName()) { ?>
                         <i class="bi bi-envelope-fill">
-                            <a href="?c=messages&a=chat&uid_from=<?php echo \App\Models\User::getIdByLogin($auth->getLoggedUserName()) ?>&uid_to=<?php echo $ad->getUsersid() ?>"
+                            <a href="?c=conversations&a=store&uid_from=<?php echo \App\Models\User::getIdByLogin($auth->getLoggedUserName()) ?>&uid_to=<?php echo $ad->getUsersid() ?>"
                             >Kontaktovať</a>
                         </i>
                     <?php } ?>

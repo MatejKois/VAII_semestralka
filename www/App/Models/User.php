@@ -21,6 +21,15 @@ class User extends Model
         return -1;
     }
 
+    static public function getLoginById($pID) : string
+    {
+        $user = self::getOne($pID);
+        if ($user) {
+            return $user->getLogin();
+        }
+        return "-1";
+    }
+
     /**
      * @return mixed
      */

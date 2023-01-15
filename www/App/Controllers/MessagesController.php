@@ -88,8 +88,8 @@ class MessagesController extends AControllerBase
         $filteredMessages = array();
         $pos = 0;
         foreach ($allMessages as $message) {
-            if ($message->getUsersIdFrom() == $uidFrom || $message->getUsersIdTo() == $uidFrom
-                || $message->getUsersIdFrom() == $uidTo || $message->getUsersIdTo() == $uidTo) {
+            if (($message->getUsersIdFrom() == $uidFrom && $message->getUsersIdTo() == $uidTo)
+                || ($message->getUsersIdFrom() == $uidTo && $message->getUsersIdTo() == $uidFrom)) {
                 $filteredMessages[$pos] = $message;
                 ++$pos;
             }
