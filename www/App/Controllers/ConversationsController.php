@@ -44,4 +44,23 @@ class ConversationsController extends AControllerBase
 
         return $this->redirect("?c=messages&a=chat&uid_from=" . $userIdFrom . "&uid_to=" . $userIdTo);
     }
+
+    public static function showNewMessage($fromUserId, $toUserId)
+    {
+        $conversations = Conversation::getAll();
+        foreach ($conversations as $conversation) {
+            if (($conversation->getUsersId1() == $fromUserId && $conversation->getUsersId2() == $toUserId)
+                || ($conversation->getUsersId1() == $toUserId && $conversation->getUsersId2() == $fromUserId)) {
+                $conversation->setHasNewMessage($toUserId);
+                $conversation->save();
+                break;
+            }
+        }
+    }
+
+    public static function hideNewMessage($conversation)
+    {
+        $conversation->setHasNewMessage(0);
+        $conversation->save();
+    }
 }

@@ -4,7 +4,6 @@
 ?>
 
 <?php if ($auth->isLogged() && $data) { ?>
-    <!--    <div class="overflow-auto p-3 bg-light" style="height: 300px" id="chatwindow">-->
     <div class="chat-window">
         <div>
             <?php foreach ($data->getFilteredMessages() as $message) {
@@ -20,8 +19,7 @@
                     <?php } ?>
                     <?php if ($message->getRead() == 0 && $message->getUsersIdTo() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
                         class="message-unread"
-                        <?php $message->setRead(1);
-                        $message->save() ?>
+                        <?php \App\Controllers\MessagesController::showMessageAsRead($message->getId()); ?>
                     <?php } ?>
                 >
                     [<?php echo $message->getDate() ?>]
@@ -47,9 +45,6 @@
         </div>
         <input type="submit" class="btn btn-primary mb-3" value="Odoslať">
     </form>
-    <!--    <script>-->
-    <!--        window.scrollTo(0, document.body.scrollHeight);-->
-    <!--    </script>-->
 <?php } ?>
 
 <?php if (!$auth->isLogged()) { ?>

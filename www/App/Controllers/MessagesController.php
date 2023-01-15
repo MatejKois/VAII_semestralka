@@ -74,6 +74,8 @@ class MessagesController extends AControllerBase
         $messageToStore->setDate($date);
         $messageToStore->setRead(0);
 
+        ConversationsController::showNewMessage($userIdFrom, $userIdTo);
+
         $messageToStore->save();
 
         return $this->redirect("?c=messages&a=chat&uid_from=" . $userIdFrom . "&uid_to=" . $userIdTo);
@@ -100,5 +102,12 @@ class MessagesController extends AControllerBase
         $args->setFilteredMessages($filteredMessages);
 
         return $this->html($args, viewName: 'chat');
+    }
+
+    public static function showMessageAsRead($id)
+    {
+        $message = Message::getOne($id);
+        $message->setRead(1);
+        $message->save();
     }
 }

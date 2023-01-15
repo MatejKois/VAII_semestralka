@@ -37,9 +37,23 @@
         <?php if ($auth->isLogged()) { ?>
             <span class="navbar-text">Prihlásený používateľ: <b><?= $auth->getLoggedUserName() ?></b></span>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="?c=conversations">Správy</a>
-                </li>
+                <?php $conversations = \App\Models\Conversation::getAll();
+                $showNew = false;
+                foreach ($conversations as $conversation) {
+                    if ($conversation->getHasNewMessage() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) {
+                        $showNew = true;
+                        break;
+                    }
+                }
+                if ($showNew) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?c=conversations" style="font-weight: bold">Správy [nové]</a>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="?c=conversations">Správy</a>
+                    </li>
+                <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link" href="?c=auth&a=logout">Odhlásenie</a>
                 </li>
