@@ -72,6 +72,7 @@ class MessagesController extends AControllerBase
         $messageToStore->setUsersIdTo($userIdTo);
         $messageToStore->setText($text);
         $messageToStore->setDate($date);
+        $messageToStore->setRead(0);
 
         $messageToStore->save();
 

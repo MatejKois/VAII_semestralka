@@ -11,6 +11,23 @@ class Message extends Model
     protected $users_id_to;
     protected $text;
     protected $date;
+    protected $read;
+
+    /**
+     * @return mixed
+     */
+    public function getRead()
+    {
+        return $this->read;
+    }
+
+    /**
+     * @param mixed $read
+     */
+    public function setRead($read): void
+    {
+        $this->read = $read;
+    }
 
     /**
      * @return mixed

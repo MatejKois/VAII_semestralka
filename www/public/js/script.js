@@ -1,3 +1,8 @@
+let scroll_to_bottom = document.getElementById('chatwindow');
+scroll_to_bottom.scrollTop = scroll_to_bottom.scrollHeight;
+
+//https://css-tricks.com/books/greatest-css-tricks/pin-scrolling-to-bottom/
+
 // let mouseIn = true;
 //
 // function adHighlight() {

@@ -4,28 +4,35 @@
 ?>
 
 <?php if ($auth->isLogged() && $data) { ?>
-    <!--    <div class="overflow-auto">-->
-    <div>
-        <?php foreach ($data->getFilteredMessages() as $message) {
-            $loggedID = \App\Models\User::getIdByLogin($auth->getLoggedUserName());
-            if ($message->getUsersIdFrom() != $loggedID && $message->getUsersIdTo() != $loggedID) {
-                ?><p style="color: red">Tieto správy nepatria Vám!!!</p> <?php
-                break;
-            }
-            ?>
-            <div
-                <?php if ($message->getUsersIdFrom() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
-                    style="color: blue"
-                <?php } ?>
-            >
-                [<?php echo $message->getDate() ?>]
-                <?php echo \App\Models\User::getOne($message->getUsersIdFrom())->getLogin();
-                if ($message->getUsersIdFrom() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
-                    (Vy)
-                <?php } ?>
-                : <?php echo $message->getText(); ?>
-            </div>
-        <?php } ?>
+    <!--    <div class="overflow-auto p-3 bg-light" style="height: 300px" id="chatwindow">-->
+    <div class="chat-window">
+        <div>
+            <?php foreach ($data->getFilteredMessages() as $message) {
+                $loggedID = \App\Models\User::getIdByLogin($auth->getLoggedUserName());
+                if ($message->getUsersIdFrom() != $loggedID && $message->getUsersIdTo() != $loggedID) { ?>
+                    <p style="color: red">Tieto správy nepatria Vám!!!</p>
+                    <?php break;
+                } ?>
+                <p
+                    <?php /** @var \App\Models\Message $message */
+                    if ($message->getUsersIdFrom() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                        class="message-user"
+                    <?php } ?>
+                    <?php if ($message->getRead() == 0 && $message->getUsersIdTo() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                        class="message-unread"
+                        <?php $message->setRead(1);
+                        $message->save() ?>
+                    <?php } ?>
+                >
+                    [<?php echo $message->getDate() ?>]
+                    <?php echo \App\Models\User::getOne($message->getUsersIdFrom())->getLogin();
+                    if ($message->getUsersIdFrom() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                        (Vy)
+                    <?php } ?>
+                    : <?php echo $message->getText(); ?>
+                </p>
+            <?php } ?>
+        </div>
     </div>
 
     <form method="post" action="?c=messages&a=store">
@@ -40,6 +47,9 @@
         </div>
         <input type="submit" class="btn btn-primary mb-3" value="Odoslať">
     </form>
+    <!--    <script>-->
+    <!--        window.scrollTo(0, document.body.scrollHeight);-->
+    <!--    </script>-->
 <?php } ?>
 
 <?php if (!$auth->isLogged()) { ?>
