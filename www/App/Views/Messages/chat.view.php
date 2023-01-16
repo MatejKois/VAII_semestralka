@@ -28,7 +28,12 @@
                         if ($message->getUsersIdFrom() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
                             (Vy)
                         <?php } ?>
-                        : <?php echo $message->getText(); ?>
+                        : <?php echo $message->getText();
+                        if ($message->getUsersIdFrom() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                            <a href="?c=messages&a=delete&id=<?php echo $message->getId() ?>&uid_from=<?php echo $message->getUsersIdFrom() ?>&uid_to=<?php echo $message->getUsersIdTo() ?>">
+                                [Zmaž]
+                            </a>
+                        <?php } ?>
                     </p>
                 <?php } ?>
             </div>

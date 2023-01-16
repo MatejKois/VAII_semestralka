@@ -6,7 +6,8 @@ use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Message;
 
-class ChatArguments {
+class ChatArguments
+{
     private $uidTo;
     private $filteredMessages;
 
@@ -77,6 +78,21 @@ class MessagesController extends AControllerBase
         ConversationsController::showNewMessage($userIdFrom, $userIdTo);
 
         $messageToStore->save();
+
+        return $this->redirect("?c=messages&a=chat&uid_from=" . $userIdFrom . "&uid_to=" . $userIdTo);
+    }
+
+    public function delete()
+    {
+        $messageToDelete = Message::getOne($this->request()->getValue('id'));
+        $userIdFrom = $this->request()->getValue('uid_from');
+        $userIdTo = $this->request()->getValue('uid_to');
+
+        if (!$messageToDelete || !$userIdFrom || !$userIdTo) {
+            return $this->redirect("?c=advertisements");
+        }
+
+        $messageToDelete->delete();
 
         return $this->redirect("?c=messages&a=chat&uid_from=" . $userIdFrom . "&uid_to=" . $userIdTo);
     }
