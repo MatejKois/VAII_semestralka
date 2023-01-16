@@ -13,8 +13,8 @@ if ($auth->isLogged()) { ?>
                     <?php } ?>
                 <?php } ?>
             </select>
-            <input type="hidden" name="uid_from"
-                   value="<?php echo \App\Models\User::getIdByLogin($auth->getLoggedUserName()) ?>">
+<!--            <input type="hidden" name="uid_from"-->
+<!--                   value="--><?php //echo $auth->getLoggedUserId() ?><!--">-->
             <input type="submit" class="btn btn-primary mb-3" value="Začni" style="margin-top: 10px">
         </form>
     </div>
@@ -26,9 +26,9 @@ if ($auth->isLogged()) { ?>
         <label>Aktívne konverzácie</label>
         <div>
             <?php foreach ($conversations as $conversation) {
-                if ($conversation->getUsersId1() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                if ($conversation->getUsersId1() == $auth->getLoggedUserId()) { ?>
                     <a href="?c=messages&a=chat&uid_from=<?php echo $conversation->getUsersId1() ?>&uid_to=<?php echo $conversation->getUsersId2() ?>"
-                        <?php if ($conversation->getHasNewMessage() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                        <?php if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) { ?>
                             style="font-weight: bold"
                             <?php \App\Controllers\ConversationsController::hideNewMessage($conversation);
                         } ?>
@@ -36,9 +36,9 @@ if ($auth->isLogged()) { ?>
                         <?php echo \App\Models\User::getLoginById($conversation->getUsersId2()) ?>
                     </a><br>
                 <?php }
-                if ($conversation->getUsersId2() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                if ($conversation->getUsersId2() == $auth->getLoggedUserId()) { ?>
                     <a href="?c=messages&a=chat&uid_from=<?php echo $conversation->getUsersId2() ?>&uid_to=<?php echo $conversation->getUsersId1() ?>"
-                        <?php if ($conversation->getHasNewMessage() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) { ?>
+                        <?php if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) { ?>
                             style="font-weight: bold"
                             <?php \App\Controllers\ConversationsController::hideNewMessage($conversation);
                         } ?>

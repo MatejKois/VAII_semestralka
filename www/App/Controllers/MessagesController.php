@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Core\AControllerBase;
 use App\Core\Responses\Response;
 use App\Models\Message;
+use App\Models\User;
 
 class ChatArguments
 {
@@ -48,7 +49,24 @@ class MessagesController extends AControllerBase
 {
     public function authorize(string $action)
     {
-        // !!
+        switch ($action) {
+            case "store":
+                return $this->app->getAuth()->isLogged();
+            case "delete":
+                $messageToDelete = Message::getOne($this->request()->getValue('id'));
+                if ($messageToDelete) {
+                    if ($this->app->getAuth()->isLogged()
+                        && $messageToDelete->getUsersIdFrom() == $this->app->getAuth()->getLoggedUserId()) {
+                        return true;
+                    }
+                }
+                return false;
+            case "chat":
+                $uidFrom = $this->request()->getValue('uid_from');
+                return $uidFrom == $this->app->getAuth()->isLogged() ?: $this->app->getAuth()->getLoggedUserName();
+            case "showMessageAsRead":
+                return false;
+        }
         return true;
     }
 
@@ -60,7 +78,7 @@ class MessagesController extends AControllerBase
     public function store()
     {
         $messageToStore = new Message();
-        $userIdFrom = $this->request()->getValue('uid_from');
+        $userIdFrom = $this->app->getAuth()->getLoggedUserId();
         $userIdTo = $this->request()->getValue('uid_to');
         $text = $this->request()->getValue('text');
         $date = date('Y-m-d H:i:s');

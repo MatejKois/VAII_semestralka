@@ -11,6 +11,13 @@ class ConversationsController extends AControllerBase
 
     public function authorize(string $action)
     {
+        switch ($action) {
+            case "store":
+                return $this->app->getAuth()->isLogged();
+            case "showNewMessage":
+            case "hideNewMessage":
+                return false;
+        }
         return true;
     }
 
@@ -21,7 +28,7 @@ class ConversationsController extends AControllerBase
 
     public function store()
     {
-        $userIdFrom = $this->request()->getValue('uid_from');
+        $userIdFrom = $this->app->getAuth()->getLoggedUserId();
         $userIdTo = $this->request()->getValue('uid_to');
 
         if (!$userIdFrom || !$userIdTo) {

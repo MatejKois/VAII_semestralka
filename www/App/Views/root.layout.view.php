@@ -42,7 +42,7 @@
             <?php $conversations = \App\Models\Conversation::getAll();
             $showNew = false;
             foreach ($conversations as $conversation) {
-                if ($conversation->getHasNewMessage() == \App\Models\User::getIdByLogin($auth->getLoggedUserName())) {
+                if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) {
                     $showNew = true;
                     break;
                 }
