@@ -1,5 +1,5 @@
 .navbar {
-    border-bottom: 1px solid blue;
+    border-bottom: 1px solid black;
 }
 
 .nav-link {
@@ -7,7 +7,8 @@
 }
 
 .navbar-brand img {
-    width: 100px;
+    width: 150px;
+    margin: 5px;
 }
 
 .title-image {
@@ -25,6 +26,12 @@ h2 {
 
 .card {
     width: 30%;
+    opacity: 0.9;
+    border-radius: 5%;
+}
+
+.card:hover {
+    opacity: 1;
 }
 
 h1 {
@@ -34,10 +41,6 @@ h1 {
 
 .prihlasenie-link:hover {
     font-weight: bold;
-}
-
-.ad-price:hover {
-    color: red;
 }
 
 .chat-window {
@@ -53,4 +56,113 @@ h1 {
 
 .message-user {
     color: blue
+}
+
+.select2-container .select2-selection--single {
+    height: 34px !important;
+}
+
+.select2-container--default .select2-selection--single {
+    border: 1px solid #ccc !important;
+    border-radius: 0px !important;
+}
+
+.col-with-background-left {
+    background-image: url('../../public/images/tires_bg_l.png');
+    background-size: contain;
+}
+
+.col-with-background-right {
+    background-image: url('../../public/images/tires_bg_r.png');
+    background-size: contain;
+}
+
+.card-img-top {
+    margin: 5px;
+    border-radius: 5%;
+    width: 95%;
+}
+
+.p-welcome-text {
+    font-weight: bold;
+}
+
+@media only screen and (max-width: 1000px) {
+    .card {
+        width: 95%;
+    }
+
+    .card-title {
+        font-size: 300%;
+    }
+
+    .card-text {
+        font-size: 300%;
+    }
+
+    .card-action {
+        font-size: 300%;
+    }
+
+    .col {
+        width: 1%;
+    }
+
+    .col-7 {
+        width: 95%;
+    }
+
+    h2 {
+        font-size: 400%;
+    }
+
+    h1 {
+        font-size: 400%;
+    }
+
+    .navbar {
+        font-size: 300%;
+        flex-direction: column;
+    }
+
+    .navbar-brand img {
+        width: 400px;
+    }
+
+    .container-conversations {
+        font-size: 400%;
+    }
+
+    .btn-primary {
+        font-size: 100%;
+    }
+
+    .select2 {
+        font-size: 25%;
+    }
+
+    .container-chat {
+        font-size: 400%;
+    }
+
+    .form-control {
+        font-size: 100%;
+    }
+
+    .chat-window {
+        height: 600px;
+        font-size: 75%;
+    }
+
+    .p-welcome-text {
+        font-size: 300%;
+    }
+
+    .container-login {
+        font-size: 400%;
+    }
+
+    .h5-login {
+        font-size: 100%;
+    }
 }
