@@ -3,7 +3,10 @@
         <?= /** @var array $data */
         @$data['message'] ?>
     </div>
-    <form method="post" action="?c=users&a=store" name="form-signup">
+    <form method="post" action="?c=users&a=store" name="form-signup"
+          onsubmit="
+              const inputs = ['login', 'password'];
+              return validateForm('form-signup', inputs)">
         <div class="mb-3">
             <label class="form-label">Login</label>
             <input type="text" name="login" class="form-control">
