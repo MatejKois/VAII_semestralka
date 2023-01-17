@@ -19,10 +19,9 @@
 <div class="container">
     <?php foreach ($data as $ad) {
         if ($auth->isLogged() && \App\Models\User::getOne($ad->getUsersid())->getLogin() == $auth->getLoggedUserName()) { ?>
-            <div class="card mb-4" style="@media only screen and (min-width: 1000px) {width: 45%}"
-                 }>
+            <div class="card mb-4" style="@media only screen and (min-width: 1000px) {width: 45%}">
                 <?php if ($ad->getImg()) { ?>
-                    <img src="<?php echo $ad->getImg() ?>" class="card-img-top">
+                    <img alt="" src="<?php echo $ad->getImg() ?>" class="card-img-top">
                 <?php } ?>
                 <div class="card-body">
                     <h5 class="card-title">

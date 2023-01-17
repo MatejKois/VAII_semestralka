@@ -3,7 +3,7 @@
         <div class="col mt-5">
             <div class="text-center">
                 <h1 style="font-weight: bold">Autobazár</h1>
-                <img class="logo-image" src="public/images/Autobazar_Logo.png">
+                <img alt="" class="logo-image" src="public/images/Autobazar_Logo.png">
                 <p class="p-welcome-text">
                     Vitajte na stránke Autobazár!<br>
                     Prezrite si všetky inzeráty, alebo sa
@@ -16,7 +16,7 @@
                     <?php } ?>
                     pre vytvorenie vlastného.<br>
                 </p>
-                <img class="title-image" src="public/images/auto-ms-kosice-autobazar-1140x550.png">
+                <img alt="" class="title-image" src="public/images/auto-ms-kosice-autobazar-1140x550.png">
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
                 <div class="card m-2">
                     <div class="container">
                         <?php if ($ad->getImg()) { ?>
-                            <img src="<?php echo $ad->getImg() ?>" class="card-img-top">
+                            <img alt="" src="<?php echo $ad->getImg() ?>" class="card-img-top">
                         <?php } ?>
                     </div>
                     <div class="card-body">

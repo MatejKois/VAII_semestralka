@@ -24,7 +24,7 @@
 <body>
 <nav class="navbar navbar-expand-sm bg-light">
     <a class="navbar-brand" href="?c=home">
-        <img src="public/images/Autobazar_Logo.png" title="<?= \App\Config\Configuration::APP_NAME ?>">
+        <img alt="" src="public/images/Autobazar_Logo.png" title="<?= \App\Config\Configuration::APP_NAME ?>">
     </a>
     <ul class="navbar-nav me-auto">
         <li class="nav-item">

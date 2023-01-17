@@ -16,7 +16,7 @@
                 <!--            --><?php //(new App\Controllers\AdvertisementsController)->displaySingle($ad) ?>
                 <div class="card m-2">
                     <?php if ($ad->getImg()) { ?>
-                        <img src="<?php echo $ad->getImg() ?>" class="card-img-top">
+                        <img alt="" src="<?php echo $ad->getImg() ?>" class="card-img-top">
                     <?php } ?>
                     <div class="card-body">
                         <h5 class="card-title">
