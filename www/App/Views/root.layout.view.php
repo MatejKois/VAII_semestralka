@@ -49,7 +49,8 @@
             }
             if ($showNew) { ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="?c=conversations" style="font-weight: bold">Správy [nové]</a>
+                    <a class="nav-link" href="?c=conversations" style="font-weight: bold">Správy <span
+                                class="badge bg-primary">nové</span></a>
                 </li>
             <?php } else { ?>
                 <li class="nav-item">

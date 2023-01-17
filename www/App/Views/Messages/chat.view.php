@@ -39,9 +39,10 @@
             </div>
         </div>
 
-        <form method="post" action="?c=messages&a=store">
-<!--            <input type="hidden" name="uid_from"-->
-<!--                   value="--><?php //echo $auth->getLoggedUserId() ?><!--">-->
+        <form method="post" action="?c=messages&a=store" name="form-chat"
+              onsubmit="
+              const inputs = ['text'];
+              return validateForm('form-chat', inputs)">
             <input type="hidden" name="uid_to" value="<?php echo $data->getUidTo() ?>">
             <div class="mb-3">
                 <label class="form-label">Text správy</label>

@@ -13,8 +13,8 @@ if ($auth->isLogged()) { ?>
                     <?php } ?>
                 <?php } ?>
             </select>
-<!--            <input type="hidden" name="uid_from"-->
-<!--                   value="--><?php //echo $auth->getLoggedUserId() ?><!--">-->
+            <!--            <input type="hidden" name="uid_from"-->
+            <!--                   value="--><?php //echo $auth->getLoggedUserId() ?><!--">-->
             <input type="submit" class="btn btn-primary mb-3" value="Začni" style="margin-top: 10px">
         </form>
     </div>
@@ -22,31 +22,45 @@ if ($auth->isLogged()) { ?>
         $('.select2').select2();
     </script>
 
-    <div class="container container-conversations">
+    <div class="container container-conversations text-center">
         <label>Aktívne konverzácie</label>
-        <div>
+        <ul class="list-group">
             <?php foreach ($conversations as $conversation) {
                 if ($conversation->getUsersId1() == $auth->getLoggedUserId()) { ?>
-                    <a href="?c=messages&a=chat&uid_from=<?php echo $conversation->getUsersId1() ?>&uid_to=<?php echo $conversation->getUsersId2() ?>"
+                    <li class="list-group-item">
+                        <a href="?c=messages&a=chat&uid_from=
+                        <?php echo $conversation->getUsersId1() ?>&uid_to=
+                        <?php echo $conversation->getUsersId2() ?>"
+                            <?php if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) { ?>
+                                style="font-weight: bold"
+                            <?php } ?>
+                        >
+                            <?php echo \App\Models\User::getLoginById($conversation->getUsersId2()) ?>
+                        </a>
                         <?php if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) { ?>
-                            style="font-weight: bold"
+                            <span class="badge bg-primary">1</span>
                             <?php \App\Controllers\ConversationsController::hideNewMessage($conversation);
                         } ?>
-                    >
-                        <?php echo \App\Models\User::getLoginById($conversation->getUsersId2()) ?>
-                    </a><br>
+                    </li>
                 <?php }
                 if ($conversation->getUsersId2() == $auth->getLoggedUserId()) { ?>
-                    <a href="?c=messages&a=chat&uid_from=<?php echo $conversation->getUsersId2() ?>&uid_to=<?php echo $conversation->getUsersId1() ?>"
+                    <li class="list-group-item">
+                        <a href="?c=messages&a=chat&uid_from=
+                        <?php echo $conversation->getUsersId2() ?>&uid_to=
+                        <?php echo $conversation->getUsersId1() ?>"
+                            <?php if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) { ?>
+                                style="font-weight: bold"
+                            <?php } ?>
+                        >
+                            <?php echo \App\Models\User::getLoginById($conversation->getUsersId1()) ?>
+                        </a>
                         <?php if ($conversation->getHasNewMessage() == $auth->getLoggedUserId()) { ?>
-                            style="font-weight: bold"
+                            <span class="badge bg-primary">1</span>
                             <?php \App\Controllers\ConversationsController::hideNewMessage($conversation);
                         } ?>
-                    >
-                        <?php echo \App\Models\User::getLoginById($conversation->getUsersId1()) ?>
-                    </a><br>
+                    </li>
                 <?php } ?>
             <?php } ?>
-        </div>
+        </ul>
     </div>
 <?php } ?>

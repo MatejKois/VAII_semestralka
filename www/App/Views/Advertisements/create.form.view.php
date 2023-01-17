@@ -1,5 +1,11 @@
 <div class="container container-create-ad">
-    <form method="post" action="?c=advertisements&a=store" enctype="multipart/form-data">
+    <form method="post" action="?c=advertisements&a=store" enctype="multipart/form-data"
+          name="form-create-ad"
+          onsubmit="
+          const inputs = ['title', 'price', 'text'];
+          return validateForm('form-create-ad', inputs)
+          && checkValuePositiveInteger('form-create-ad', 'price');"
+    >
         <?php
         /** @var \App\Models\Advertisement $data */
         if ($data) {
@@ -12,15 +18,17 @@
         <?php } ?>
         <div class="mb-3">
             <label class="form-label">Titulok</label>
-            <input type="text" name="title" class="form-control" placeholder="Titulok" value="<?php echo $data ? $data->getTitle() : null ?>">
+            <input type="text" name="title" class="form-control" placeholder="Titulok"
+                   value="<?php echo $data ? $data->getTitle() : null ?>">
         </div>
         <div class="mb-3">
             <label class="form-label">Cena</label>
-            <input type="number" name="price" class="form-control" value="<?php echo $data ? $data->getPrice() : null ?>">
+            <input type="number" name="price" class="form-control"
+                   value="<?php echo $data ? $data->getPrice() : null ?>">
         </div>
         <div class="mb-3">
             <label class="form-label">Text inzerátu</label>
-            <textarea class="form-control" name="text" rows="3">
+            <textarea class="form-control" name="text" rows="3"></textarea>
             <?php echo $data ? $data->getText() : null ?>
         </textarea>
         </div>
