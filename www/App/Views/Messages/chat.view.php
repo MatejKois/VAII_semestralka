@@ -33,22 +33,33 @@
                             <a href="?c=messages&a=delete&id=<?php echo $message->getId() ?>&uid_from=<?php echo $message->getUsersIdFrom() ?>&uid_to=<?php echo $message->getUsersIdTo() ?>">
                                 [Zmaž]
                             </a>
+                            <a href="?c=messages&a=chat&edit_id=<?php echo $message->getId() ?>&uid_from=<?php echo $message->getUsersIdFrom() ?>&uid_to=<?php echo $message->getUsersIdTo() ?>">
+                                [Uprav]
+                            </a>
                         <?php } ?>
                     </p>
                 <?php } ?>
             </div>
         </div>
 
-        <form method="post" action="?c=messages&a=store" name="form-chat"
+        <form method="post" action="?c=messages&a=store<?php if ($data->getMessageToEditID() != -1) {
+            echo "&id=" . $data->getMessageToEditID();
+        } ?>" name="form-chat"
               onsubmit="
               const inputs = ['text'];
               return validateForm('form-chat', inputs)">
             <input type="hidden" name="uid_to" value="<?php echo $data->getUidTo() ?>">
             <div class="mb-3">
                 <label class="form-label">Text správy</label>
-                <textarea class="form-control" name="text" rows="3"></textarea>
+                <textarea class="form-control" name="text" rows="3"><?php if ($data->getMessageToEditID() != -1) {
+                        echo \App\Models\Message::getOne($data->getMessageToEditID())->getText();
+                    } ?></textarea>
             </div>
-            <input type="submit" class="btn btn-primary mb-3" value="Odoslať">
+            <input type="submit" class="btn btn-primary mb-3" value="<?php if ($data->getMessageToEditID() != -1) {
+                echo "Uprav";
+            } else {
+                echo "Odoslať";
+            } ?>">
         </form>
     </div>
 <?php } ?>

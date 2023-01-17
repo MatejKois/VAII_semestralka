@@ -7,44 +7,6 @@ use App\Core\Responses\Response;
 use App\Models\Message;
 use App\Models\User;
 
-class ChatArguments
-{
-    private $uidTo;
-    private $filteredMessages;
-
-    /**
-     * @return mixed
-     */
-    public function getUidTo()
-    {
-        return $this->uidTo;
-    }
-
-    /**
-     * @param mixed $uidTo
-     */
-    public function setUidTo($uidTo): void
-    {
-        $this->uidTo = $uidTo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getFilteredMessages()
-    {
-        return $this->filteredMessages;
-    }
-
-    /**
-     * @param mixed $filteredMessages
-     */
-    public function setFilteredMessages($filteredMessages): void
-    {
-        $this->filteredMessages = $filteredMessages;
-    }
-}
-
 class MessagesController extends AControllerBase
 {
     public function authorize(string $action)
@@ -77,11 +39,17 @@ class MessagesController extends AControllerBase
 
     public function store()
     {
-        $messageToStore = new Message();
         $userIdFrom = $this->app->getAuth()->getLoggedUserId();
         $userIdTo = $this->request()->getValue('uid_to');
         $text = $this->request()->getValue('text');
         $date = date('Y-m-d H:i:s');
+
+        $id = $this->request()->getValue('id');
+        if ($id != null) {
+            $messageToStore = Message::getOne($id);
+        } else {
+            $messageToStore = new Message();
+        }
 
         if (!$userIdFrom || !$userIdTo) {
             return $this->redirect("?c=advertisements");
@@ -89,7 +57,11 @@ class MessagesController extends AControllerBase
 
         $messageToStore->setUsersIdFrom($userIdFrom);
         $messageToStore->setUsersIdTo($userIdTo);
-        $messageToStore->setText($text);
+        if ($id != null) {
+            $messageToStore->setText("(Upravené) " . $text);
+        } else {
+            $messageToStore->setText($text);
+        }
         $messageToStore->setDate($date);
         $messageToStore->setRead(0);
 
@@ -119,6 +91,7 @@ class MessagesController extends AControllerBase
     {
         $uidFrom = $this->request()->getValue('uid_from');
         $uidTo = $this->request()->getValue('uid_to');
+        $idToEdit = $this->request()->getValue('edit_id');
 
         $allMessages = Message::getAll();
         $filteredMessages = array();
@@ -135,6 +108,12 @@ class MessagesController extends AControllerBase
         $args->setUidTo($uidTo);
         $args->setFilteredMessages($filteredMessages);
 
+        if ($idToEdit != null) {
+            $args->setMessageToEditID($idToEdit);
+        } else {
+            $args->setMessageToEditID(-1);
+        }
+
         return $this->html($args, viewName: 'chat');
     }
 
@@ -143,5 +122,60 @@ class MessagesController extends AControllerBase
         $message = Message::getOne($id);
         $message->setRead(1);
         $message->save();
+    }
+}
+
+class ChatArguments
+{
+    private $uidTo;
+    private $filteredMessages;
+    private $messageToEditID;
+
+    /**
+     * @return mixed
+     */
+    public function getMessageToEditID()
+    {
+        return $this->messageToEditID;
+    }
+
+    /**
+     * @param mixed $messageToEditID
+     */
+    public function setMessageToEditID($messageToEditID): void
+    {
+        $this->messageToEditID = $messageToEditID;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUidTo()
+    {
+        return $this->uidTo;
+    }
+
+    /**
+     * @param mixed $uidTo
+     */
+    public function setUidTo($uidTo): void
+    {
+        $this->uidTo = $uidTo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilteredMessages()
+    {
+        return $this->filteredMessages;
+    }
+
+    /**
+     * @param mixed $filteredMessages
+     */
+    public function setFilteredMessages($filteredMessages): void
+    {
+        $this->filteredMessages = $filteredMessages;
     }
 }
