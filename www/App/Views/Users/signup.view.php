@@ -11,12 +11,12 @@
             <label class="form-label">Login</label>
             <input type="text" name="login" class="form-control">
         </div>
-        <div class="mb-3">
+        <div class="mb-3" id="div-password-input">
             <label class="form-label">Heslo</label>
             <input type="password" name="password" id="passowrd" class="form-control">
         </div>
         <script>
-            evaluatePassword('form-signup', 'password');
+            evaluatePassword('form-signup', 'password', 'div-password-input');
         </script>
         <input type="submit" class="btn btn-primary mb-3" value="Zaregistrovať">
     </form>

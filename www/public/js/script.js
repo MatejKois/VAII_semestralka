@@ -29,7 +29,7 @@ function checkValuePositiveInteger(formName, inputName) {
     return true;
 }
 
-function evaluatePassword(formName, inputName) {
+function evaluatePassword(formName, inputName, passwordDivID) {
     const passwordWeak = 1;
     const passwordMediocre = 2;
     const passwordStrong = 3;
@@ -78,20 +78,44 @@ function evaluatePassword(formName, inputName) {
                 passwordStrength = passwordWeak; //regardless of its length
             }
 
+            const oldP = document.getElementById("p-password-strength");
+
+            if (oldP != null) {
+                oldP.parentNode.removeChild(oldP);
+            }
+
+            const newP = document.createElement("p");
+            newP.id = "p-password-strength";
+            newP.style.marginTop = "5px";
+            let message;
+
             switch (passwordStrength) {
                 case passwordWeak:
                     inputField.style.backgroundColor = "orangered";
+                    message = "Sila hesla: slabé";
+                    newP.style.color = "orangered";
                     break;
                 case passwordMediocre:
-                    inputField.style.backgroundColor = "yellow";
+                    inputField.style.backgroundColor = "orange";
+                    message = "Sila hesla: stredné";
+                    newP.style.color = "orange";
                     break;
                 case passwordStrong:
                     inputField.style.backgroundColor = "yellowgreen";
+                    message = "Sila hesla: silné";
+                    newP.style.color = "yellowgreen";
                     break;
                 case passwordVeryStrong:
                     inputField.style.backgroundColor = "lime";
+                    message = "Sila hesla: velmi silné";
+                    newP.style.color = "lime";
                     break;
             }
+
+            const textNode = document.createTextNode(message);
+            newP.appendChild(textNode);
+
+            document.getElementById(passwordDivID).appendChild(newP);
         });
     }
 }
